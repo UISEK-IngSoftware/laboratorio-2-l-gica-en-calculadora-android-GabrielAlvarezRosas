@@ -68,14 +68,16 @@ class CalculatorViewModel: ViewModel(){
     Gestionar evento de ingreso de operadores
      */
     private fun enterOperator(operator: String){
-        if (number1.isNotBlank()){
-            this.operator = operator
-        }
+        if (number1.isBlank()) return
 
+        if (number2.isNotBlank()&&this.operator !=null) {
+            performCalculator()
+        }
+        this.operator = operator
     }
     private fun clearAll(){
-        number1=" "
-        number2=" "
+        number1=""
+        number2=""
         operator=null
         state= state.copy(display = "0")
     }
@@ -101,7 +103,7 @@ class CalculatorViewModel: ViewModel(){
         if(num1 !=null && num2 != null && operator !=null ){
             val result = when (operator){
                 "+" -> num1 + num2
-                "-" -> num1 - num2
+                "−" -> num1 - num2
                 "×" -> num1 * num2
                 "÷" -> if (num2 !=0.0) num1 / num2 else Double.NaN
                 else -> 0.0
